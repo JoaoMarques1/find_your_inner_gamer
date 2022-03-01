@@ -11,7 +11,7 @@ def get_name(url):
         url (str): Link to the web page for a given game.
     
     Returns:
-        str: Game name or if missing 'NaN' value
+        str: Game name or if missing 'NaN' value.
     """
     response = requests.get(url).text
     soup = BeautifulSoup(response, "html.parser")

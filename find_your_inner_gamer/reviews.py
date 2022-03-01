@@ -24,7 +24,7 @@ def get_review(url):
         url (str): Link to the web page for a given game
     
     Returns:
-        str/float: review category or if missing 'NaN' value
+        str/float: review category or if missing 'NaN' value.
     """
     response = requests.get(url).text
     soup = BeautifulSoup(response, "html.parser")

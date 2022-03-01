@@ -41,10 +41,10 @@ def get_date(url):
     Scrapes the given url for the release date of the game.
     
     Args:
-        url (str): Link to the web page for a given game
+        url (str): Link to the web page for a give game
     
     Returns:
-        str/float: a str representing the date or if missing return 'NaN'
+        str/float: a str representing the date or if missing return 'NaN'.
     """
     response = requests.get(url).text
     soup = BeautifulSoup(response, "html.parser")
