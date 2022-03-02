@@ -30,4 +30,4 @@ joblib
 memoized-property
 termcolor
 
-bs4
+bs4nltk
