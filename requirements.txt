@@ -30,6 +30,10 @@ joblib
 memoized-property
 termcolor
 
+<<<<<<< HEAD
+bs4nltk
+=======
 bs4
 nltk
 unidecode
+>>>>>>> 2fe396f064d941abe5698a8a1405ba19d1efd7a9
