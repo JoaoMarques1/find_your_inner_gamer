@@ -11,7 +11,7 @@ def get_data():
 
 ### merge genre and popular tag in one column
 ### drop columns :publisher, all_rveiews, recent_reviews, discount, genre, popular tags
-
+ 
 
 
 ##replace na in other columns

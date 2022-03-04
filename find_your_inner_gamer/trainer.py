@@ -20,4 +20,4 @@ class Trainer(object):
 if __name__ == '__main__':
     # Get and clean data
     df = get_data()
-    # Train and save model
+    # Train and save model 
