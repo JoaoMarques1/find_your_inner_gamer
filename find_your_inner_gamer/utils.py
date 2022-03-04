@@ -6,10 +6,10 @@ import datetime as dt
 def get_name(url):
     """
     Scrapes the url website for the game name
-    
+
     Args:
         url (str): Link to the web page for a given game.
-    
+
     Returns:
         str: Game name or if missing 'NaN' value.
     """
