@@ -1,5 +1,6 @@
 import pandas as pd
 from google.cloud import storage
+import joblib
 from find_your_inner_gamer.params import BUCKET_NAME, BUCKET_CSV_DATA_PATH,BUCKET_TRANSFORMED_CSV_DATA_PATH,MODEL_NAME, MODEL_VERSION
 
 
@@ -28,4 +29,6 @@ def get_model_from_gcp():
     local_model_name = 'model.joblib'
     storage_location = f"models/{MODEL_NAME}/{MODEL_VERSION}/{local_model_name}"
     blob = client.blob(storage_location)
-    blob.load_from_filename('model.joblib')
+    blob.download_to_filename('model.joblib')
+    model = joblib.load('model.joblib')
+    return model
