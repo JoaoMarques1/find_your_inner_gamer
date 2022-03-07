@@ -69,7 +69,7 @@ pypi:
 PROJECT_ID=lewagon-bootcamp-337521
 
 # bucket name - replace with your GCP bucket name
-BUCKET_NAME=wagon-data-find_your_inner_gamer
+BUCKET_NAME=wagon-data-find-your-inner-gamer
 
 # choose your region from https://cloud.google.com/storage/docs/locations#available_locations
 REGION=europe-west1
