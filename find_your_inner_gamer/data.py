@@ -4,7 +4,7 @@ import joblib
 from find_your_inner_gamer.params import BUCKET_NAME, BUCKET_CSV_DATA_PATH,BUCKET_TRANSFORMED_CSV_DATA_PATH,MODEL_NAME, MODEL_VERSION
 
 
-def get_data():
+def get_local_data():
     return pd.read_csv('../raw_data/clean_df.csv' )
 
 def get_clean_data_from_gcp():
