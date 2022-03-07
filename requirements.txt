@@ -23,6 +23,10 @@ gcsfs
 google-cloud-storage
 mlflow
 s3fs
+fastapi
+uvicorn
+docker
+streamlit
 
 # utilities
 six>=1.14

@@ -7,11 +7,11 @@ PROJECT_ID='lewagon-bootcamp-337521'
 
 ### GCP Storage - - - - - - - - - - - - - - - - - - - - - -
 
-BUCKET_NAME='find-your-inner-gamer'
+BUCKET_NAME='find_your_inner_gamer'
 
 ##### Data  - - - - - - - - - - - - - - - - - - - - - - - -
-BUCKET_CSV_DATA_PATH="gs://find-your-inner-gamer/data/clean_df.csv"
-BUCKET_TRANSFORMED_CSV_DATA_PATH= "gs://find-your-inner-gamer/data/X_neighbors.csv"
+BUCKET_CSV_DATA_PATH="/data/clean_df.csv"
+BUCKET_TRANSFORMED_CSV_DATA_PATH= "/data/X_neighbors.csv"
 
 # train data file location
 # /!\ here you need to decide if you are going to train using the provided and uploaded data/train_1k.csv sample file
