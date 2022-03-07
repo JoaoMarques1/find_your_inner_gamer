@@ -14,6 +14,7 @@ from sklearn.compose import make_column_transformer
 
 from find_your_inner_gamer.utils import kmeans_labels
 from find_your_inner_gamer.data import get_data
+from find_your_inner_gamer.gcp import  storage_upload
 
 class Trainer(object):
     def __init__(self, X, y):
@@ -83,3 +84,5 @@ class Trainer(object):
 
 if __name__ == "__main__":
     df = get_data()
+
+    storage_upload()
