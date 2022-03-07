@@ -4,8 +4,8 @@ FROM python:3.8.12-bullseye
 COPY model.joblib /model.joblib
 COPY api /api
 COPY requirements.txt /requirements.txt
-#COPY TaxiFareModel /TaxiFareModel
-#COPY /Users/laurabonnet/Documents/GITHUBK/main-cyclist-337816-8df14917206d.json
+COPY FindYourInnerGamer / FindYourInnerGamer
+# COPY /Users/laurabonnet/Documents/GITHUBK/main-cyclist-337816-8df14917206d.json
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt

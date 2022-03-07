@@ -69,7 +69,7 @@ pypi:
 PROJECT_ID=lewagon-bootcamp-337521
 
 # bucket name - replace with your GCP bucket name
-BUCKET_NAME=wagon-data-804-marques
+BUCKET_NAME=wagon-data-find_your_inner_gamer
 
 # choose your region from https://cloud.google.com/storage/docs/locations#available_locations
 REGION=europe-west1
@@ -79,7 +79,19 @@ set_project:
 
 create_bucket:
 	@gsutil mb -l ${REGION} -p ${PROJECT_ID} gs://${BUCKET_NAME}
-    
+
 upload_data:
 	-@gsutil cp ${LOCAL_PATH} gs://${BUCKET_NAME}/${BUCKET_FOLDER}/${BUCKET_FILE_NAME}
 
+
+LOCAL_PATH= "../raw_data/clean_df.csv"
+
+# bucket directory in which to store the uploaded file (`data` is an arbitrary name that we choose to use)
+BUCKET_FOLDER=data
+
+# name for the uploaded file inside of the bucket (we choose not to rename the file that we upload)
+BUCKET_FILE_NAME=$(shell basename ${LOCAL_PATH})
+
+upload_data:
+    # @gsutil cp train_1k.csv gs://wagon-ml-my-bucket-name/data/train_1k.csv
+	@gsutil cp ${LOCAL_PATH} gs://${BUCKET_NAME}/${BUCKET_FOLDER}/${BUCKET_FILE_NAME}
