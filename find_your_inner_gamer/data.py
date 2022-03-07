@@ -14,4 +14,4 @@ def get_data_from_gcp():
     df = pd.read_csv(path)
     return df
 
-
+def get_model_from_gcp():

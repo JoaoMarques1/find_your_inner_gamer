@@ -16,3 +16,16 @@ def storage_upload(rm=False):
                   "green"))
     if rm:
         os.remove('model.joblib')
+
+
+def data_upload(rm=False):
+    client = storage.Client().bucket(BUCKET_NAME)
+
+    local_model_name = 'X_DataFrame.csv'
+    storage_location = f"Data/{local_model_name}"
+    blob = client.blob(storage_location)
+    blob.upload_from_filename('X_DataFrame.csv')
+    print(colored(f"=> X_DataFrame.csvuploaded to bucket {BUCKET_NAME} inside {storage_location}",
+                  ))
+    if rm:
+        os.remove('X_DataFrame.csv')
