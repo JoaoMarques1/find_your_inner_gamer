@@ -17,7 +17,7 @@ from find_your_inner_gamer.data import get_data, get_data_from_gcp
 from find_your_inner_gamer.gcp  import data_upload, storage_upload
 
 class Trainer(object):
-    def __init__(self, X, y, X_neighbors ):
+    def __init__(self, X, y, X_neighbors):
         self.pipeline = None
         self.X = X
         self.y = y
