@@ -61,4 +61,4 @@ def recommending_system(model, X, game):
 
 if __name__ == '__main__':
 
-    #TODO recommending_system(download_model(), download_path)
+    recommending_system(download_model(), download_path)
