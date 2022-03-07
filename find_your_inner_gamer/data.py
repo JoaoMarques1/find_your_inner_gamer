@@ -14,6 +14,7 @@ def get_clean_data_from_gcp():
     df = pd.read_csv(path)
     return df
 
+<<<<<<< HEAD
 def get_X_data_from_gcp():
     """method to get the  data from google cloud bucket"""
     # Add Client() here
@@ -29,3 +30,6 @@ def get_model_from_gcp():
     storage_location = f"models/{MODEL_NAME}/{MODEL_VERSION}/{local_model_name}"
     blob = client.blob(storage_location)
     blob.load_from_filename('model.joblib')
+=======
+def get_model_from_gcp():
+>>>>>>> 5c3a0b8a119c88ca2d196d23805efe648a12e35b

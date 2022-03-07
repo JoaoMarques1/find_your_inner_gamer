@@ -13,13 +13,15 @@ from sklearn.pipeline import make_pipeline
 from sklearn.compose import make_column_transformer
 
 from find_your_inner_gamer.utils import kmeans_labels
-from find_your_inner_gamer.data import get_data
+from find_your_inner_gamer.data import get_data, get_data_from_gcp
+from find_your_inner_gamer.gcp  import data_upload, storage_upload
 
 class Trainer(object):
-    def __init__(self, X, y):
+    def __init__(self, X, y, X_neighbors ):
         self.pipeline = None
         self.X = X
         self.y = y
+        self.X_neighbors = X_neighbors
 
     def set_pipeline(self):
         array_transf = FunctionTransformer(lambda array: array.toarray())
@@ -73,26 +75,27 @@ class Trainer(object):
         self.pipeline  = full_pipe.fit_transform(self.X)
 
     def train(self):
-        X_train = pd.DataFrame(self.pipeline, index=self.X.name.tolist())
-        return KNeighborsRegressor().fit(X_train, self.y)
+        self.X_neighbors = pd.DataFrame(self.pipeline, index=self.X.name.tolist())
+        return KNeighborsRegressor().fit(self.X_neighbors, self.y)
 
-    def save_movel(self):
+    def save_model(self):
         joblib.dump(self.pipeline, 'model.joblib')
-        print("model.joblib saved locally", "green")
+        print("model.joblib saved locally")
+
+    def save_dataframe(self):
+        self.X_neighbors.to_csv('../raw_data/X_neighbors.csv', index=False)
+
 
 
 if __name__ == "__main__":
-    df = get_data()
     df = get_data_from_gcp()
-    df = clean_data(df)
-    y = df["fare_amount"]
-    X = df.drop("fare_amount", axis=1)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+
     # Train and save model, locally and
-    trainer = Trainer(X=X_train, y=y_train)
-    trainer.set_experiment_name('xp2')
-    trainer.run()
-    rmse = trainer.evaluate(X_test, y_test)
-    print(f"rmse: {rmse}")
-    trainer.save_model_locally()
+    trainer = Trainer()
+    trainer.set_pipeline()
+    trainer.train()
+    trainer.save_model()
+    trainer.save_dataframe()
+
     storage_upload()
+    data_upload()
