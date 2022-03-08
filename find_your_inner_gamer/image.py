@@ -7,4 +7,4 @@ def get_img(url):
     try:
         return soup.find('img', class_='game_header_image_full').attrs['src']
     except AttributeError:
-        return float('nan')
+        return 'no image'

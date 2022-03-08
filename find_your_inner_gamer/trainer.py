@@ -13,15 +13,13 @@ from sklearn.pipeline import make_pipeline
 from sklearn.compose import make_column_transformer
 
 from find_your_inner_gamer.utils import kmeans_labels
-from find_your_inner_gamer.data import get_data, get_data_from_gcp
-from find_your_inner_gamer.gcp  import data_upload, storage_upload
+from find_your_inner_gamer.gcp  import storage_upload, get_data_from_gcp
 
 class Trainer(object):
-    def __init__(self, X, y, X_neighbors):
+    def __init__(self, X, y):
         self.pipeline = None
         self.X = X
         self.y = y
-        self.X_neighbors = X_neighbors
 
     def set_pipeline(self):
         array_transf = FunctionTransformer(lambda array: array.toarray())
@@ -62,7 +60,6 @@ class Trainer(object):
 
         num_transf = make_pipeline(StandardScaler())
 
-
         preproc_basic = make_column_transformer(
             (meta_transf, 'metadata'),
             (cluster_transf, ['cluster']),
@@ -75,27 +72,21 @@ class Trainer(object):
         self.pipeline  = full_pipe.fit_transform(self.X)
 
     def train(self):
-        self.X_neighbors = pd.DataFrame(self.pipeline, index=self.X.name.tolist())
-        return KNeighborsRegressor().fit(self.X_neighbors, self.y)
+        self.set_pipeline()
+        X_neighbors = pd.DataFrame(self.pipeline, index=self.X.name.tolist())
+        X_neighbors.to_csv('X_neighbors.csv')
+        return KNeighborsRegressor().fit(X_neighbors, self.y)
 
-    def save_model(self):
-        joblib.dump(self.pipeline, 'model.joblib')
+    def save_model(self, model):
+        joblib.dump(model, 'model.joblib')
         print("model.joblib saved locally")
-
-    def save_dataframe(self):
-        self.X_neighbors.to_csv('../raw_data/X_neighbors.csv', index=False)
-
+        storage_upload()
 
 
 if __name__ == "__main__":
     df = get_data_from_gcp()
 
     # Train and save model, locally and
-    trainer = Trainer()
-    trainer.set_pipeline()
-    trainer.train()
-    trainer.save_model()
-    trainer.save_dataframe()
-
-    storage_upload()
-    data_upload()
+    trainer = Trainer(df, df['url'])
+    model = trainer.train()
+    trainer.save_model(model)
