@@ -1,48 +1,24 @@
+from urllib import response
 import streamlit as st
+import requests
+from find_your_inner_gamer.gcp import get_data_from_gcp
 
-'''
-# TaxiFareModel front
-'''
 
-st.markdown('''
-Remember that there are several ways to output content into your web page...
+url = 'https://find-your-inner-gamer-7oqykbx6lq-ew.a.run.app/predict'
 
-Either as with the title by just creating a string (or an f-string). Or as with this paragraph using the `st.` functions
-''')
+@st.cache
+def get_select_box_data():
+    return get_data_from_gcp()
 
-'''
-## Here we would like to add some controllers in order to ask the user to select the parameters of the ride
+df = get_select_box_data()
 
-1. Let's ask for:
-- date and time
-- pickup longitude
-- pickup latitude
-- dropoff longitude
-- dropoff latitude
-- passenger count
-'''
+game = st.selectbox('Select your favourite game', df['name'])
 
-'''
-## Once we have these, let's call our API in order to retrieve a prediction
+params = {
+    'game': game
+}
 
-See ? No need to load a `model.joblib` file in this app, we do not even need to know anything about Data Science in order to retrieve a prediction...
-
-🤔 How could we call our API ? Off course... The `requests` package 💡
-'''
-
-url = 'https://find-your-inner-gamer-7oqykbx6lq-ew.a.run.app'
-
-if url == 'https://find-your-inner-gamer-7oqykbx6lq-ew.a.run.app':
-
-    st.markdown('Use our API to find your next game...')
-
-'''
-
-2. Let's build a dictionary containing the parameters for our API...
-
-3. Let's call our API using the `requests` package...
-
-4. Let's retrieve the prediction from the **JSON** returned by the API...
-
-## Finally, we can display the prediction to the user
-'''
+if st.button('Find Similar'):
+    response = requests.get(url, params)
+    pred = response.json()
+    st.write(pred)

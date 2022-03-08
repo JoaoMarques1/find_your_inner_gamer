@@ -21,7 +21,6 @@ def index():
 
 
 @app.get("/predict")
-
 def predict(game):
     df = get_data_from_gcp()
     df = df.fillna('no value')
@@ -29,15 +28,9 @@ def predict(game):
     X_neighbors = get_neighbors_from_gcp()
     X_neighbors.set_index('Unnamed: 0',drop=True, inplace = True)
     neighbors_index = model.kneighbors(X_neighbors.loc[[game]],n_neighbors=10)[1][0]
-    neighbors_distance = model.kneighbors(X_neighbors.loc[[game]],n_neighbors=10)[0][0]
-    neighbors_list = neighbors_index.tolist()
-
-
-
 
     new_df_values = {
          'title' : [],
-         'distance': neighbors_distance.tolist(),
          'url': [],
          'price': [],
          'reviews': [],
@@ -55,6 +48,4 @@ def predict(game):
          new_df_values['developer'].append(df.loc[index, 'developer'])
          new_df_values['image_url'].append(get_img(df.loc[index, 'url']))
 
-    #return {'test' : new_df_values['title']}
-    #pd.DataFrame(neighbors_distance, index = X_neighbors.iloc[neighbors_list, :].index, columns=['distance']).head()
     return new_df_values
