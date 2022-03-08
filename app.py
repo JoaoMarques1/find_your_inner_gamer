@@ -74,18 +74,17 @@ else:
     col1, col2 = st.columns(2)
     col3, col4 = st.columns(2)
 
-    cols = [st.columns(2) for n in range(len(pred['title']))]
 
     for game, col in zip (pred['title'][1:5] , [col1,col2,col3,col4]):
 
         row = df[df['name']== game]
 
-        col.header(f"{game}")
+        col.header(f"[{game}]({row['url'].iloc[0]})")
         col.markdown(f"<p class='small-font'>{' '.join(row['tags'])}</p>", unsafe_allow_html=True)
         col.image(get_img(row['url'].iloc[0]),
 
                     use_column_width=True, # Manually Adjust the width of the image as per requirement
                 )
         col.write(f"{' '.join(row['game_description'])}", use_column_width=True)
-        col.write(f"{row['url'].iloc[0]}", use_column_width=True)
+        #col.write(f"{row['url'].iloc[0]}", use_column_width=True)
         col.write(f"{row['reviews'].iloc[0]}", use_column_width=True)
