@@ -17,8 +17,6 @@ params = {
     'game': game
 }
 
-st.write(df[df['name'] == game]['game_description'])
-
 if st.button('Find Similar'):
     response = requests.get(url, params)
     pred = response.json()
