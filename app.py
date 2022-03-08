@@ -24,7 +24,7 @@ with c31:
     st.header("")
 
 
-st.image('https://images.newscientist.com/wp-content/uploads/2021/10/27162905/PRI_207080436.jpg?crop=16:9,smart&width=1200&height=675&upscale=true')
+
 # Creating the about this app
 with st.sidebar:
     with st.expander("ℹ️ - About this app", expanded=True):
@@ -68,8 +68,9 @@ st.markdown("""
 
 
 # displaying recommended titles
-if clik :
-
+if clik == False:
+    st.image('https://images.newscientist.com/wp-content/uploads/2021/10/27162905/PRI_207080436.jpg?crop=16:9,smart&width=1200&height=675&upscale=true')
+else:
     col1, col2 = st.columns(2)
     col3, col4 = st.columns(2)
 
