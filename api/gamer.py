@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sklearn.neighbors import KNeighborsRegressor
 import pandas as pd
 from find_your_inner_gamer.image import get_img
-from find_your_inner_gamer.data import get_clean_data_from_gcp, get_model_from_gcp,get_X_data_from_gcp
+from find_your_inner_gamer.gcp import get_data_from_gcp, get_model_from_gcp, get_neighbors_from_gcp
 
 app = FastAPI()
 
@@ -23,10 +23,10 @@ def index():
 @app.get("/predict")
 
 def predict(game):
-    df = get_clean_data_from_gcp()
+    df = get_data_from_gcp()
     df = df.fillna('no value')
     model = get_model_from_gcp()
-    X_neighbors = get_X_data_from_gcp()
+    X_neighbors = get_neighbors_from_gcp()
     X_neighbors.set_index('Unnamed: 0',drop=True, inplace = True)
     neighbors_index = model.kneighbors(X_neighbors.loc[[game]],n_neighbors=10)[1][0]
     neighbors_distance = model.kneighbors(X_neighbors.loc[[game]],n_neighbors=10)[0][0]
