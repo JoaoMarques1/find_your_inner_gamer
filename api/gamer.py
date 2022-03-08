@@ -30,22 +30,22 @@ def predict(game):
     neighbors_index = model.kneighbors(X_neighbors.loc[[game]],n_neighbors=10)[1][0]
 
     new_df_values = {
-         'title' : [],
-         'url': [],
-         'price': [],
-         'reviews': [],
-         'op_sys': [],
-         'developer': [],
-         'image_url' : []
+         'title' : [df.loc[index, 'name'] for index in neighbors_index],
+        #  'url': [],
+        #  'price': [],
+        #  'reviews': [],
+        #  'op_sys': [],
+        #  'developer': [],
+        #  'image_url' : []
      }
 
-    for index in neighbors_index:
-         new_df_values['title'].append(df.loc[index, 'name'])
-         new_df_values['url'].append(df.loc[index, 'url'])
-         new_df_values['price'].append(df.loc[index, 'price'])
-         new_df_values['reviews'].append(df.loc[index, 'reviews'])
-         new_df_values['op_sys'].append(df.loc[index, 'op_sys'])
-         new_df_values['developer'].append(df.loc[index, 'developer'])
-         new_df_values['image_url'].append(get_img(df.loc[index, 'url']))
+    # for index in neighbors_index:
+    #      new_df_values['title'].append(df.loc[index, 'name'])
+    #      new_df_values['url'].append(df.loc[index, 'url'])
+    #      new_df_values['price'].append(df.loc[index, 'price'])
+    #      new_df_values['reviews'].append(df.loc[index, 'reviews'])
+    #      new_df_values['op_sys'].append(df.loc[index, 'op_sys'])
+    #      new_df_values['developer'].append(df.loc[index, 'developer'])
+    #      new_df_values['image_url'].append(get_img(df.loc[index, 'url']))
 
     return new_df_values

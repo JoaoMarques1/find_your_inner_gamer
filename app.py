@@ -3,7 +3,6 @@ import streamlit as st
 import requests
 from find_your_inner_gamer.gcp import get_data_from_gcp
 
-
 url = 'https://find-your-inner-gamer-7oqykbx6lq-ew.a.run.app/predict'
 
 @st.cache
@@ -17,6 +16,8 @@ game = st.selectbox('Select your favourite game', df['name'])
 params = {
     'game': game
 }
+
+st.write(df[df['name'] == game]['game_description'])
 
 if st.button('Find Similar'):
     response = requests.get(url, params)
