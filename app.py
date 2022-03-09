@@ -18,11 +18,8 @@ st.set_page_config(
 clik = False
 
 # Creating three columns and putting title in the middle
-c30, c31, c32 = st.columns([5, 10, 5])
-with c31:
-    st.title("🎮 Find Your Inner Gamer")
-    st.header("")
-
+st.markdown("<h1 style='text-align: center;'>🎮 Find Your Inner Gamer</h1>", unsafe_allow_html=True)
+st.header("")
 
 
 # Creating the about this app
@@ -30,7 +27,7 @@ with st.sidebar:
     with st.expander("ℹ️ - About this app", expanded=True):
         st.write(
         """
-    🦁 Created with Love in Le Wagon by Luis Quieros, Joao Marques, Laura Bonnet 🦁
+    🦁 Created with Love in Le Wagon by Luis Queiros, Joao Marques, Laura Bonnet 🦁
 	    """
     )
     st.markdown("")
@@ -69,22 +66,44 @@ st.markdown("""
 
 # displaying recommended titles
 if clik == False:
-    st.image('https://images.newscientist.com/wp-content/uploads/2021/10/27162905/PRI_207080436.jpg?crop=16:9,smart&width=1200&height=675&upscale=true')
+    col1, col2, col3 = st.columns([1, 2, 1])
+
+    col2.image('https://images.newscientist.com/wp-content/uploads/2021/10/27162905/PRI_207080436.jpg?crop=16:9,smart&width=1200&height=675&upscale=true')
 else:
-    col1, col2 = st.columns(2)
-    col3, col4 = st.columns(2)
+    cols = st.columns(2)
+    i = 0
+
+    reviews_scale = {
+        "Overwhelmingly Negative": '🦠'*5,
+        "Very Negative": '🦠'*4,
+        "Negative": '🦠'*3,
+        "Mostly Negative": '🦠'*2,
+        'Mixed': '★' + '☆'*4,
+        "Mostly Positive": '★'*2 + '☆'*3,
+        "Positive": '★'*3 + '☆'*2,
+        "Very Positive": '★'*4 + '☆',
+        "Overwhelmingly Positive": '★'*5
+    }
 
 
-    for game, col in zip (pred['title'][1:5] , [col1,col2,col3,col4]):
+    for game in pred['title'][1:]:
 
         row = df[df['name']== game]
+        url = row['url'].iloc[0]
+        tags = row['popular_tags'].iloc[0]
+        desc = row['desc_snippet'].iloc[0]
+        review = row['reviews'].iloc[0]
 
-        col.header(f"[{game}]({row['url'].iloc[0]})")
-        col.markdown(f"<p class='small-font'>{' '.join(row['tags'])}</p>", unsafe_allow_html=True)
-        col.image(get_img(row['url'].iloc[0]),
-
-                    use_column_width=True, # Manually Adjust the width of the image as per requirement
+        cols[i].header(f"[{game}]({url})")
+        cols[i].markdown(f"<p class='small-font'>{tags}</p>".ljust(500), unsafe_allow_html=True)
+        cols[i].image(get_img(url),
+                    width=700
+                    #use_column_width=True, # Manually Adjust the width of the image as per requirement
                 )
-        col.write(f"{' '.join(row['game_description'])}", use_column_width=True)
-        #col.write(f"{row['url'].iloc[0]}", use_column_width=True)
-        col.write(f"{row['reviews'].iloc[0]}", use_column_width=True)
+        cols[i].write(f"{review} {reviews_scale[review]}".ljust(500), use_column_width=True)
+        cols[i].markdown(f"<p class='small-font'>{desc}</p>".ljust(500), unsafe_allow_html=True)
+
+        if i == 0:
+            i = 1
+        else:
+            i = 0
