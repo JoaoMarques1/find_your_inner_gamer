@@ -49,6 +49,9 @@ with st.sidebar:
     cs, c1, c2 = st.columns([1, 6, 1])
     with c1:
         if st.button('✨ Find Similar Games'):
+            st.write("Review Scale:")
+            st.write("🦠 - Negative;")
+            st.write("★ - Positive;")
             response = requests.get(url, params)
             pred = response.json()
             clik = True
@@ -57,11 +60,31 @@ with st.sidebar:
 # creating font
 st.markdown("""
 <style>
-.small-font {
-    font-size:10px !tags;
+.tags {
+    height: 3em;
+    line-height: 1.6;
+    margin: 2em auto;
+}
+
+.review{
+    height: 3em;
+    line-height: 1.6;
+    margin: 1em auto;
+}
+
+.desc{
+    height: 3em;
+    line-height: 1.6;
+    margin: 1em auto;
+}
+
+.title{
+    height: 3em;
+    margin: 1em auto;
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 
 # displaying recommended titles
@@ -85,7 +108,6 @@ else:
         "Overwhelmingly Positive": '★'*5
     }
 
-
     for game in pred['title'][1:]:
 
         row = df[df['name']== game]
@@ -94,14 +116,21 @@ else:
         desc = row['desc_snippet'].iloc[0]
         review = row['reviews'].iloc[0]
 
-        cols[i].header(f"[{game}]({url})")
-        cols[i].markdown(f"<p class='small-font'>{tags}</p>".ljust(500), unsafe_allow_html=True)
+
+        cols[i].markdown(f"<h1 class='title'><a href='{url}'>{game}</a></h1>", unsafe_allow_html=True)
+        cols[i].markdown(f"<p class='tags'>{tags}</p>", unsafe_allow_html=True)
         cols[i].image(get_img(url),
-                    width=700
-                    #use_column_width=True, # Manually Adjust the width of the image as per requirement
-                )
-        cols[i].write(f"{review} {reviews_scale[review]}".ljust(500), use_column_width=True)
-        cols[i].markdown(f"<p class='small-font'>{desc}</p>".ljust(500), unsafe_allow_html=True)
+                    use_column_width=True, # Manually Adjust the width of the image as per requirement
+        )
+        cols[i].markdown(
+            f"<p class='review'>{review} {reviews_scale[review]}</p>",
+            unsafe_allow_html=True
+        )
+
+        cols[i].markdown(
+            f"<p class='desc'>{desc}</p>",
+            unsafe_allow_html=True
+        )
 
         if i == 0:
             i = 1
