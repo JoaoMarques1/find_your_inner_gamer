@@ -33,13 +33,6 @@ joblib
 memoized-property
 termcolor
 
-<<<<<<< HEAD
 bs4
 nltk
 unidecode
-=======
-nltk
-unidecode
-google-cloud-storage
-fsspec
->>>>>>> 27438624c89cf61e79a1da7c2c68dc72a31a652c
