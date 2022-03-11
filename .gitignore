@@ -6,3 +6,4 @@ raw_data/
 *.csv
 **/__pycache__/
 .env
+/home/pyfenix/code/JoaoMarques1/find_your_inner_gamer/notebooks/Untitled.ipynb
