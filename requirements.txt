@@ -8,7 +8,6 @@ wheel>=0.29
 numpy
 pandas
 scikit-learn
-math
 bs4
 
 # tests/linter
@@ -23,6 +22,10 @@ gcsfs
 google-cloud-storage
 mlflow
 s3fs
+fastapi
+uvicorn
+docker
+streamlit
 
 # utilities
 six>=1.14
@@ -30,6 +33,13 @@ joblib
 memoized-property
 termcolor
 
+<<<<<<< HEAD
 bs4
 nltk
 unidecode
+=======
+nltk
+unidecode
+google-cloud-storage
+fsspec
+>>>>>>> 27438624c89cf61e79a1da7c2c68dc72a31a652c

@@ -1,24 +1,38 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.cluster import KMeans
 import requests
 from bs4 import BeautifulSoup
-import datetime as dt
 
 
-def get_name(url):
-    """
-    Scrapes the url website for the game name
+def kmeans_labels(df):
+    """Function to create clusters between games.
 
     Args:
-        url (str): Link to the web page for a given game.
+        df (pandas.DataFrame): Preprocessing dataframe
 
     Returns:
-        str: Game name or if missing 'NaN' value.
+        list: List with the cluster for each game in the same order the games appear in df
+    """
+    vec = TfidfVectorizer(min_df = 0.07 ,ngram_range=(1,2))
+    X = vec.fit_transform(df['game_description'])
+    kmodel = KMeans(n_clusters=70)
+    kmodel.fit(X)
+
+    return kmodel.labels_
+
+
+def get_img(url):
+    """Function that gets the url for teh game image.
+
+    Args:
+        url (str): Game url
+
+    Returns:
+        str: Game image url
     """
     response = requests.get(url).text
     soup = BeautifulSoup(response, "html.parser")
     try:
-        return soup.find('h2', class_='pageheader').text.strip()
+        return soup.find('img', class_='game_header_image_full').attrs['src']
     except AttributeError:
-        try:
-            return soup.find('div', class_='apphub_AppName').text.strip()
-        except AttributeError:
-            return float('nan')
+        return 'no image'

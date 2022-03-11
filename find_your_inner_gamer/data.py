@@ -1,17 +1,10 @@
-from distutils.command.clean import clean
 import pandas as pd
+from find_your_inner_gamer.params import LOCAL_DATA_PATH
 
-def get_data():
-    return pd.read_csv('raw_data/clean_df.csv')
+def get_local_data():
+    """Fucntion to get the data locally
 
-
-### merge with review csv + date csv + price csv
-### replace na by english in languages
-
-
-### merge genre and popular tag in one column
-### drop columns :publisher, all_rveiews, recent_reviews, discount, genre, popular tags
-
-
-
-##replace na in other columns
+    Returns:
+        pandas.DataFrame: Dataframe for our games.
+    """
+    return pd.read_csv(LOCAL_DATA_PATH)
